@@ -1,4 +1,32 @@
 
+// esegue la join tra due array in base all'uguaglianza di chiavi calcolate come si vuole
+// -> ritorna object con: key=chiaveCalcolata value=[arrElems1,arrElems2]
+function joinArrays(arr1,arr2,fKey1,fKey2){ // arrays e relative funzioni che estraggono la chiave dall'elemento
+  let res={};
+  for (let a of arr1){
+    let k1=fKey1(a);
+    if (res[k1]==undefined) res[k1]=[[a],[]]; else res[k1][0].push(a);
+  }
+  for (let a of arr2){
+    let k1=fKey2(a);
+    if (res[k1]==undefined) res[k1]=[[],[a]]; else res[k1][1].push(a);
+  }
+  return res;
+}
+
+function groupArray(arr,fKey,fValue){ // ritorna oggetti con chiave calcolata tramite funct e valore calcolato tramite funct
+  if (!fValue) fValue=(x=>x);
+  let res={};
+  for (let a of arr){
+    let k1=fKey(a);
+    if (res[k1]==undefined) res[k1]=[fValue(a)]; else res[k1].push(fValue(a));
+  }
+  return res;
+}
+
+
+
+
 // execute "asyncFunct" for each element of "argArray", launching "numParallel" threads at time
 // (example: you need to call an API for every element of a 1000 sized array, but you want to execute 5 parallel request)
 // initDelayMs    = delay between first launch of each thread
@@ -51,3 +79,7 @@ async function parallelAsyncArray(asyncFunct,argArray,numParallel,initDelayMs,re
 // esempio di funzione che chiama una API
 // let arr=['06972060823', '97284520828','01123880468', '01765530488','00802100149', '03773050137','00802100149', '03773050137','80041150584','08936640963'];
 // let r=await parallelAsyncArray(id=>fetch("https://www.geppoz.eu/pub/checkcfpi.php?pi="+id).then(x=>x.text()),arr,4,100,100,true);
+
+
+
+
